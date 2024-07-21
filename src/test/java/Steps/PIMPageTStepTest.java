@@ -3,9 +3,11 @@ package Steps;
 import org.openqa.selenium.By;
 
 import BaseLayer.BaseClass;
+import io.cucumber.java.AfterStep;
 import io.cucumber.java.en.When;
 
 public class PIMPageTStepTest extends BaseClass {
+	static String empId;
 
 	@When("user click on pim link")
 	public void user_click_on_pim_link() {
@@ -30,6 +32,35 @@ public class PIMPageTStepTest extends BaseClass {
 	public void user_click_on_save_button() {
 		driver.findElement(By.xpath("//button[text()=' Save ']")).click();
 
+	}
+
+	@When("user capture employee id")
+	public void user_capture_employee_id() {
+		empId = driver
+				.findElement(By.xpath("//label[text()='Employee Id']/parent::div/following-sibling::div/child::input"))
+				.getAttribute("value");
+	}
+
+	@When("user click on employee list")
+	public void user_click_on_employee_list() {
+		driver.findElement(By.xpath("//a[text()='Employee List']")).click();
+	}
+
+	@When("user enter captured employee id")
+	public void user_enter_captured_employee_id() {
+		driver.findElement(By.xpath("//label[text()='Employee Id']/parent::div/following-sibling::div/child::input"))
+				.sendKeys(empId);
+	}
+
+	@When("user click on search button")
+	public void user_click_on_search_button() {
+		driver.findElement(By.xpath("//button[text()=' Search ']")).click();
+
+	}
+
+	@AfterStep
+	public void abc() throws InterruptedException {
+		Thread.sleep(3000);
 	}
 
 }
